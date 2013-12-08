@@ -1,0 +1,11 @@
+django
+south
+django-compressor
+djangorestframework
+markdown
+django-filter
+django-extensions
+Werkzeug
+psycopg2
+gunicorn
+cssmin
