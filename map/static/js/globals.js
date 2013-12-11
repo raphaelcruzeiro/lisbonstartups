@@ -1,0 +1,2 @@
+
+var globals =  new Object();

@@ -1,0 +1,86 @@
+{% load compress %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Lisbon Startups</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=1280" initial-scale="1">
+
+        <meta property="og:url" content="http://lisbonstartups.org/">
+        <meta property="og:image" content="http://lisbonstartups.org/static/imgs/og.png">
+        <meta property="og:title" content="Lisbon Startups">
+        <meta property="og:description" content="An interactive map of the Lisbon Startup scene.">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        {% compress css %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/normalize.css">
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+        {% endcompress %}
+        <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
+    </head>
+    <body ng-app="lisbonstartups">
+        <div class="main" ng-controller="map.Controller">
+            <nav class="site-nav"></nav>
+            <section ng-map id="map"></section>
+        </div>
+        <!-- Modal -->
+        <div class="modal-blocker">
+            <div class="table">
+                <div class="middle">
+                    <div class="modal">
+                        <div class="close-btn"></div>
+                        <div class="content" ng-controller="add.Controller">
+                            <h2>Add a startup</h2>
+                            <div class="elem-wrapper">
+                                <span class="error"><input type="text" placeholder="Name" ng-model="name"/></span>
+                            </div>
+                            <div class="elem-wrapper">
+                                <span class="error"><textarea placeholder="Description" ng-model="description"/></textarea></span>
+                            <div?
+                            <div class="address-wrapper">
+                                <div class="elem-wrapper">
+                                    <span class="error"><input type="text" placeholder="Address" ng-model="address" ng-address-autocomplete/></span>
+                                </div>
+                                <ul class="sugestions" ng-show="sugestions" ng-cloak>
+                                    <li ng-repeat="sugestion in sugestions" ng-class="{selected : $first, item : true}" ng-select>
+                                        <span ng-bind="sugestion"></span>
+                                    <li>
+                                </ul>
+                            </div>
+                            <div class="elem-wrapper">
+                                <span class="error"><input type="url" ng-model="url" placeholder="Website" /></span>
+                            </div>
+                            <label>
+                                What kind of place are you adding?
+                                <select ng-model="type" ng-required ng-options="type.name for type in types" ></select>
+                            </label>
+                            <div class="btn-pane">
+                                <button type="submit">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTYtIKUgXmiaI2cJMAHttvtyslecKgLUY&sensor=false"></script>
+        {% compress js %}
+        <script src="{{ STATIC_URL }}js/libs/jquery-1.10.2.min.js"></script>
+        <script src="{{ STATIC_URL }}js/libs/angular.min.js"></script>
+        <script src="{{ STATIC_URL }}js/libs/angular-route.min.js"></script>
+        <script src="{{ STATIC_URL }}js/libs/angular-sanitize.min.js"></script>
+        <script src="{{ STATIC_URL }}js/libs/angular-animate.min.js"></script>
+        <script src="{{ STATIC_URL }}js/app.js"></script>
+        <script src="{{ STATIC_URL }}js/directives.js"></script>
+        <script src="{{ STATIC_URL }}js/map.js"></script>
+        <script src="{{ STATIC_URL }}js/add.js"></script>
+        {% endcompress %}
+    </body>
+</html>
