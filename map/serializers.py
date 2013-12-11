@@ -1,5 +1,10 @@
 from rest_framework import serializers
-from models import Place
+from models import Place, Address
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
 
 
 class PlaceSerializer(serializers.ModelSerializer):
@@ -8,6 +13,13 @@ class PlaceSerializer(serializers.ModelSerializer):
     number = serializers.IntegerField()
     lat = serializers.FloatField()
     lng = serializers.FloatField()
+
+    class Meta:
+        model = Place
+
+
+class PlaceReadOnlySerializer(serializers.ModelSerializer):
+    address = AddressSerializer()
 
     class Meta:
         model = Place

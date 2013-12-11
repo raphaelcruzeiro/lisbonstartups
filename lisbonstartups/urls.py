@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/places/?$', map.views.PlaceList.as_view()),
     url(r'^api/add_place/?$', map.views.AddPlace.as_view()),
     url(r'^$', map.views.Index.as_view()),
 )

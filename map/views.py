@@ -13,7 +13,10 @@ class AddPlace(generics.CreateAPIView):
     serializer_class = serializers.PlaceSerializer
 
     def post(self, request):
-        serializer = serializers.PlaceSerializer(data=request.DATA)
+        serializer = serializers.PlaceSerializer(request.DATA)
+
+        print request.DATA
+        print serializer.data
 
         address = models.Address(
             city=serializer.data['city'],
@@ -37,3 +40,9 @@ class AddPlace(generics.CreateAPIView):
             'status' : 'ok'
         })
 
+
+class PlaceList(generics.ListAPIView):
+    serializer_class = serializers.PlaceReadOnlySerializer
+
+    def get_queryset(self):
+        return models.Place.objects.all()

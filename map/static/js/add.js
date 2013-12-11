@@ -38,17 +38,22 @@ var add = (function(){
     }
 
     var Controller = function($scope, $rootScope) {
-        $scope.sugestionBoxOpen = false;
-        $scope.place ={};
-        $scope.rawGeocodingData = [];
+        var reset = function() {
+            $scope.addBox = true;
+            $scope.sugestionBoxOpen = false;
+            $scope.place ={};
+            $scope.rawGeocodingData = [];
 
-        $scope.types = [
-            { name: 'Startup', value: 'st' },
-            { name: 'Accelerator', value: 'ac' },
-            { name: 'Coworking', value: 'cw' },
-        ];
+            $scope.types = [
+                { name: 'Startup', value: 'st' },
+                { name: 'Accelerator', value: 'ac' },
+                { name: 'Coworking', value: 'cw' },
+            ];
 
-        $scope.place.type = $scope.types[0];
+            $scope.place.type = $scope.types[0];
+        };
+
+        reset();
 
         $scope.$on('gotAddressSugestions', function(ev, response) {
             $scope.rawGeocodingData = response;
@@ -94,7 +99,6 @@ var add = (function(){
                 number: getComponent('street_number', data),
                 street: getComponent('route', data),
             };
-            console.log($scope.place);
             $scope.sugestions = null;
             $scope.sugestionBoxOpen = false;
             $scope.$apply();
@@ -117,9 +121,14 @@ var add = (function(){
                 place.lng = place.address.lng;
                 delete place.address;
                 $scope.httpPost('/api/add_place/', place, function(response) {
-                    console.log(response);
+                    hideLoader();
+                    $scope.addBox = false;
                 });
             }
+        };
+
+        $scope.addAnother = function() {
+            reset();
         };
 
         // This does not belong here

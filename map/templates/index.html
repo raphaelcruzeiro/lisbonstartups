@@ -27,17 +27,28 @@
     </head>
     <body ng-app="lisbonstartups">
         {% csrf_token %}
+        <a href="https://github.com/raphaelcruzeiro/lisbonstartups"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:4;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
         <div class="main" ng-controller="map.Controller">
-            <nav class="site-nav"></nav>
+            <nav class="site-nav">
+                <h1>Lisbon Startups</h1>
+            </nav>
+            <section class="sidebar">
+                <button class="add-something" ng-show-modal>Add something...</button>
+                <ul class="filter">
+                    <li><label>Startups</label><input type="checkbox" checked="checked"><label><span></span></label></li>
+                    <li><label>Accelerators</label><input type="checkbox" checked="checked"><label><span></span></label></li>
+                    <li><label>Coworking</label><input type="checkbox" checked="checked"><label><span></span></label></li>
+                </ul>
+            </section>
             <section ng-map id="map"></section>
         </div>
         <!-- Modal -->
         <div class="modal-blocker">
             <div class="table">
                 <div class="middle">
-                    <div class="modal">
-                        <div class="close-btn"></div>
-                        <div class="content" ng-controller="add.Controller">
+                    <div class="modal" ng-controller="add.Controller">
+                        <div class="close-btn" ng-close-modal></div>
+                        <div class="content" ng-show="addBox">
                             <div class="loader"></div>
                             <h2>Add a startup</h2>
                             <form name="addForm" novalidate>
@@ -45,8 +56,8 @@
                                     <span ng-class="{ok : !addForm.name.$error.required}"><input type="text" placeholder="Name" name="name" ng-model="place.name" required/></span>
                                 </div>
                                 <div class="elem-wrapper">
-                                    <span ng-class="{ok : !addForm.description.$error.required}"><textarea placeholder="Description" name="description" ng-model="place.description" required/></textarea></span>
-                                <div>
+                                    <span ng-class="{ok : !addForm.description.$error.required}"><textarea placeholder="Description" name="description" ng-model="place.description" required></textarea></span>
+                                </div>
                                 <div class="address-wrapper">
                                     <div class="elem-wrapper">
                                         <input type="hidden" ng-model="place.address.number" required />
@@ -70,6 +81,13 @@
                                     <button type="submit" ng-disabled="addForm.$invalid" ng-click="add()">Add</button>
                                 </div>
                             </form>
+                        </div>
+                        <div class="content" ng-show="!addBox">
+                            <h2>Thank you</h2>
+                            <p>Your submission has been sent and is now pending approval.</p>
+                            <div class="btn-pane">
+                                <button type="submit" ng-disabled="addForm.$invalid" ng-click="addAnother()">Add another</button>
+                            </div>
                         </div>
                     </div>
                 </div>

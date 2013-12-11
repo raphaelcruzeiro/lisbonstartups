@@ -20,7 +20,7 @@ app.directive('ngMap', function(){
                         "elementType": "all",
                         "stylers": [
                             {
-                                "invert_lightness": false
+                                "invert_lightness": true
                             },
                             {
                                 "saturation": 8
@@ -32,7 +32,7 @@ app.directive('ngMap', function(){
                                 "gamma": 0.5
                             },
                             {
-                                "hue": "#ffff00"
+                                "hue": "#ffffff"
                             }
                         ]
                     },{
@@ -137,6 +137,34 @@ app.directive('ngSelect', function($rootScope){
                 elem.click(function(ev) {
                     ev.preventDefault();
                     $rootScope.$broadcast('clickedSugestion', elem.find('input[type="hidden"]').val());
+                })
+            };
+        }
+    };
+    return obj;
+});
+
+app.directive('ngCloseModal', function($rootScope){
+    var obj = {
+        compile: function(element, attrs) {
+            return function(scope, elem, attrs){
+                elem.click(function(ev) {
+                    ev.preventDefault();
+                    $('.modal-blocker').fadeOut();
+                })
+            };
+        }
+    };
+    return obj;
+});
+
+app.directive('ngShowModal', function($rootScope){
+    var obj = {
+        compile: function(element, attrs) {
+            return function(scope, elem, attrs){
+                elem.click(function(ev) {
+                    ev.preventDefault();
+                    $('.modal-blocker').fadeIn();
                 })
             };
         }
