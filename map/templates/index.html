@@ -26,6 +26,7 @@
         <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" rel="stylesheet">
     </head>
     <body ng-app="lisbonstartups">
+        {% csrf_token %}
         <div class="main" ng-controller="map.Controller">
             <nav class="site-nav"></nav>
             <section ng-map id="map"></section>
@@ -37,33 +38,38 @@
                     <div class="modal">
                         <div class="close-btn"></div>
                         <div class="content" ng-controller="add.Controller">
+                            <div class="loader"></div>
                             <h2>Add a startup</h2>
-                            <div class="elem-wrapper">
-                                <span class="error"><input type="text" placeholder="Name" ng-model="name"/></span>
-                            </div>
-                            <div class="elem-wrapper">
-                                <span class="error"><textarea placeholder="Description" ng-model="description"/></textarea></span>
-                            <div?
-                            <div class="address-wrapper">
+                            <form name="addForm" novalidate>
                                 <div class="elem-wrapper">
-                                    <span class="error"><input type="text" placeholder="Address" ng-model="address" ng-address-autocomplete/></span>
+                                    <span ng-class="{ok : !addForm.name.$error.required}"><input type="text" placeholder="Name" name="name" ng-model="place.name" required/></span>
                                 </div>
-                                <ul class="sugestions" ng-show="sugestions" ng-cloak>
-                                    <li ng-repeat="sugestion in sugestions" ng-class="{selected : $first, item : true}" ng-select>
-                                        <span ng-bind="sugestion"></span>
-                                    <li>
-                                </ul>
-                            </div>
-                            <div class="elem-wrapper">
-                                <span class="error"><input type="url" ng-model="url" placeholder="Website" /></span>
-                            </div>
-                            <label>
-                                What kind of place are you adding?
-                                <select ng-model="type" ng-required ng-options="type.name for type in types" ></select>
-                            </label>
-                            <div class="btn-pane">
-                                <button type="submit">Add</button>
-                            </div>
+                                <div class="elem-wrapper">
+                                    <span ng-class="{ok : !addForm.description.$error.required}"><textarea placeholder="Description" name="description" ng-model="place.description" required/></textarea></span>
+                                <div>
+                                <div class="address-wrapper">
+                                    <div class="elem-wrapper">
+                                        <input type="hidden" ng-model="place.address.number" required />
+                                        <span  ng-class="{ok : !addForm.address.$error.required&&validAddress()}"><input type="text" placeholder="Address" name="address" ng-model="place.address.formatted_address" ng-address-autocomplete required/></span>
+                                    </div>
+                                    <ul class="sugestions" ng-show="sugestions" ng-cloak>
+                                        <li ng-repeat="sugestion in sugestions" ng-class="{selected : $first, item : true}" ng-select>
+                                            <span ng-bind="sugestion.address"></span>
+                                            <input type="hidden" ng-value="sugestion.index" />
+                                        <li>
+                                    </ul>
+                                </div>
+                                <div class="elem-wrapper">
+                                    <span ng-class="{ok : !addForm.url.$error.required}"><input type="url" ng-model="place.url" name="url" placeholder="Website" required/></span>
+                                </div>
+                                <label>
+                                    What kind of place are you adding?
+                                    <select ng-model="place.type" ng-required ng-options="type.name for type in types" ></select>
+                                </label>
+                                <div class="btn-pane">
+                                    <button type="submit" ng-disabled="addForm.$invalid" ng-click="add()">Add</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

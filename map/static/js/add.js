@@ -1,5 +1,14 @@
 
 var add = (function(){
+
+    var showLoader = function() {
+        $('.loader').show();
+    };
+
+    var hideLoader = function() {
+        $('.loader').hide();
+    };
+
     var getComponent = function(name, data) {
         var components = data.address_components;
         for(var i = 0; i < components.length; i++) {
@@ -30,6 +39,8 @@ var add = (function(){
 
     var Controller = function($scope, $rootScope) {
         $scope.sugestionBoxOpen = false;
+        $scope.place ={};
+        $scope.rawGeocodingData = [];
 
         $scope.types = [
             { name: 'Startup', value: 'st' },
@@ -37,9 +48,10 @@ var add = (function(){
             { name: 'Coworking', value: 'cw' },
         ];
 
-        $scope.type = $scope.types[0];
+        $scope.place.type = $scope.types[0];
 
         $scope.$on('gotAddressSugestions', function(ev, response) {
+            $scope.rawGeocodingData = response;
             $scope.sugestions = [];
             if (response.length == 0) {
                 $scope.sugestionBoxOpen = false;
@@ -47,15 +59,13 @@ var add = (function(){
                 return;
             };
             for(var i = 0; i < response.results.length; i++) {
-                var address = '';
                 var result = response.results[i];
-                address += join('', getComponent('route', result));
-                if (/\d/.test($scope.address)) {
-                    address = join(address, getComponent('street_number', result));
-                }
-                address = join(address, getComponent('administrative_area_level_1', result));
+                var address = result.formatted_address;
                 if ($scope.sugestions.indexOf(address) == -1) {
-                    $scope.sugestions.push(address);
+                    $scope.sugestions.push({
+                        index: i,
+                        address: address
+                    });
                 }
             }
             if($scope.sugestions.length > 0) {
@@ -64,8 +74,27 @@ var add = (function(){
             }
         });
 
+        $scope.validAddress = function() {
+            if ($scope.place.address) {
+                var address = $scope.place.address;
+                if (address.number && address.lat && address.lng) {
+                    return true;
+                };
+            };
+            return false;
+        };
+
         $scope.didSelectSugestion = function() {
-            $scope.address = $scope.onSelection;
+            var data = $scope.rawGeocodingData.results[parseInt($scope.onSelection)];
+            $scope.place.address = {
+                formatted_address: data.formatted_address,
+                lat: data.geometry.location.lat,
+                lng: data.geometry.location.lng,
+                city: getComponent('administrative_area_level_1', data),
+                number: getComponent('street_number', data),
+                street: getComponent('route', data),
+            };
+            console.log($scope.place);
             $scope.sugestions = null;
             $scope.sugestionBoxOpen = false;
             $scope.$apply();
@@ -76,12 +105,31 @@ var add = (function(){
             $scope.didSelectSugestion();
         });
 
+        $scope.add = function() {
+            if(!addForm.$invalid) {
+                showLoader()
+                var place = angular.copy($scope.place);
+                place.type = place.type.value;
+                place.city = place.address.city;
+                place.number = place.address.number;
+                place.street = place.address.street;
+                place.lat = place.address.lat;
+                place.lng = place.address.lng;
+                delete place.address;
+                $scope.httpPost('/api/add_place/', place, function(response) {
+                    console.log(response);
+                });
+            }
+        };
+
         // This does not belong here
         $(document).keyup(function(ev) {
             if (!$scope.sugestionBoxOpen) {
                 return
             };
             if (ev.keyCode == 13) {
+                var currentElem = $('.modal').find('li.selected');
+                $scope.onSelection = currentElem.find('input[type="hidden"]').val();
                 $scope.didSelectSugestion();
                 ev.preventDefault();
                 return;
@@ -101,7 +149,7 @@ var add = (function(){
                     currentElem = selected;
                 }
                 currentElem.addClass('selected');
-                $scope.onSelection = currentElem.find('span').html();
+                $scope.onSelection = currentElem.find('input[type="hidden"]').val();
                 ev.preventDefault();
             }
         });

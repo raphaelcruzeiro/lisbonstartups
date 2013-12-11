@@ -136,7 +136,7 @@ app.directive('ngSelect', function($rootScope){
             return function(scope, elem, attrs){
                 elem.click(function(ev) {
                     ev.preventDefault();
-                    $rootScope.$broadcast('clickedSugestion', elem.find('span').html());
+                    $rootScope.$broadcast('clickedSugestion', elem.find('input[type="hidden"]').val());
                 })
             };
         }
