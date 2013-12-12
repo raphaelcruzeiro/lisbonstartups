@@ -121,8 +121,9 @@ app.directive('ngAddressAutocomplete', function($rootScope){
                     });
                 });
                 elem.blur(function() {
-                    console.log('blur');
-                    $rootScope.$broadcast('gotAddressSugestions', []);
+                    setTimeout(function(){
+                        $rootScope.$broadcast('gotAddressSugestions', []);
+                    }, 200);
                 });
             };
         }
