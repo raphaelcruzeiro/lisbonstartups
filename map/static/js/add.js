@@ -48,6 +48,8 @@ var add = (function(){
                 { name: 'Startup', value: 'st' },
                 { name: 'Accelerator', value: 'ac' },
                 { name: 'Coworking', value: 'cw' },
+                { name: 'Investor', value: 'iv' },
+                { name: 'Incubator', value: 'ic' },
             ];
 
             $scope.place.type = $scope.types[0];

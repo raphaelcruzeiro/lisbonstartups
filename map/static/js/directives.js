@@ -20,7 +20,7 @@ app.directive('ngMap', function(){
                         "elementType": "all",
                         "stylers": [
                             {
-                                "invert_lightness": true
+                                "invert_lightness": false
                             },
                             {
                                 "saturation": 8
@@ -32,7 +32,7 @@ app.directive('ngMap', function(){
                                 "gamma": 0.5
                             },
                             {
-                                "hue": "#ffffff"
+                                "hue": "#ffff00"
                             }
                         ]
                     },{

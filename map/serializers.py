@@ -16,6 +16,7 @@ class PlaceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Place
+        exclude = ('published',)
 
 
 class PlaceReadOnlySerializer(serializers.ModelSerializer):

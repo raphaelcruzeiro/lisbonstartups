@@ -30,12 +30,13 @@ ALLOWED_HOSTS = ['lisbonstartups.org']
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'grappelli',
+    'django.contrib.admin',
     'rest_framework',
     'south',
     'django_extensions',
@@ -106,3 +107,5 @@ TEMPLATE_DIRS = (
 )
 
 AUTH_USER_MODEL = 'map.User'
+
+GRAPPELLI_ADMIN_TITLE = 'Lisbon Startups'

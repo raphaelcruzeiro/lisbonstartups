@@ -27,6 +27,7 @@
     </head>
     <body ng-app="lisbonstartups">
         {% csrf_token %}
+        <div id="fb-root"></div>
         <a href="https://github.com/raphaelcruzeiro/lisbonstartups"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:4;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
         <div class="main" ng-controller="map.Controller">
             <nav class="site-nav">
@@ -34,11 +35,18 @@
             </nav>
             <section class="sidebar">
                 <button class="add-something" ng-show-modal>Add something...</button>
-                <ul class="filter">
-                    <li><label>Startups</label><input type="checkbox" checked="checked"><label><span></span></label></li>
-                    <li><label>Accelerators</label><input type="checkbox" checked="checked"><label><span></span></label></li>
-                    <li><label>Coworking</label><input type="checkbox" checked="checked"><label><span></span></label></li>
-                </ul>
+                <div class="show">
+                    <h3>Show:</h3>
+                    <ul class="filter">
+                        <li><label><img src="{{ STATIC_URL}}imgs/marker-startup.png">Startups (<span ng-bind="startupCount"></span>)</label><input type="checkbox" checked="checked" ng-model="startups" ng-click="filter()"><label><span></span></label></li>
+                        <li><label><img src="{{ STATIC_URL}}imgs/marker-accelerator.png">Accelerators (<span ng-bind="acceleratorCount"></span>)</label><input type="checkbox" checked="checked" ng-model="accelerators" ng-click="filter()"><label><span></span></label></li>
+                        <li><label><img src="{{ STATIC_URL}}imgs/marker-coworking.png">Coworking (<span ng-bind="coworkingCount"></span>)</label><input type="checkbox" checked="checked" ng-model="coworking" ng-click="filter()"><label><span></span></label></li>
+                        <li><label><img src="{{ STATIC_URL}}imgs/marker-investor.png">Investors (<span ng-bind="investorCount"></span>)</label><input type="checkbox" checked="checked" ng-model="investors" ng-click="filter()"><label><span></span></label></li>
+                        <li><label><img src="{{ STATIC_URL}}imgs/marker-incubator.png">Incubators (<span ng-bind="incubatorCount"></span>)</label><input type="checkbox" checked="checked" ng-model="incubators" ng-click="filter()"><label><span></span></label></li>
+                    </ul>
+                </div>
+                <div class="fb-like" data-href="http://lisbonstartups.org" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+                <span class="copyright">Developed by <a href="http://raphaelcruzeiro.eu/">Raphael Cruzeiro.</a>.</span>
             </section>
             <section ng-map id="map"></section>
         </div>
@@ -106,5 +114,13 @@
         <script src="{{ STATIC_URL }}js/map.js"></script>
         <script src="{{ STATIC_URL }}js/add.js"></script>
         {% endcompress %}
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=249795148491028";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
     </body>
 </html>

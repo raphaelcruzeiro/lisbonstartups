@@ -76,6 +76,8 @@ class Place(models.Model):
         ('st', 'Startup'),
         ('ac', 'Accelerator'),
         ('cw', 'Coworking'),
+        ('iv', 'Investor'),
+        ('ic', 'Incubator'),
     )
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=600)
@@ -84,7 +86,8 @@ class Place(models.Model):
     last_edit = models.DateTimeField(auto_now=True, editable=False)
     address = models.OneToOneField(Address)
     url = models.URLField()
+    published = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.title
+        return self.name
 

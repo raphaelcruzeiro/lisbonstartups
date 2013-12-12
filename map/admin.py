@@ -80,7 +80,11 @@ class UserAdmin(admin.ModelAdmin):
 
 
 class PlaceAdmin(admin.ModelAdmin):
-    pass
+    def publish(self, request, queryset):
+        queryset.update(published=True)
+
+    actions = ['publish']
+    list_display = ['name', 'address', 'published']
 
 admin.site.register(models.Address)
 admin.site.register(models.Place, PlaceAdmin)

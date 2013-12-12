@@ -45,4 +45,4 @@ class PlaceList(generics.ListAPIView):
     serializer_class = serializers.PlaceReadOnlySerializer
 
     def get_queryset(self):
-        return models.Place.objects.all()
+        return models.Place.objects.filter(published=True)
