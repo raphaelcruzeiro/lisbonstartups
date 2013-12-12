@@ -69,6 +69,7 @@
                                 <div class="address-wrapper">
                                     <div class="elem-wrapper">
                                         <input type="hidden" ng-model="place.address.number" required />
+                                        <label class="tip">Try to enter a complete address with street name and number, and then select the address from the list. The box will turn green once it has an address that can be located on the map.</label>
                                         <span  ng-class="{ok : !addForm.address.$error.required&&validAddress()}"><input type="text" placeholder="Address" name="address" ng-model="place.address.formatted_address" ng-address-autocomplete required/></span>
                                     </div>
                                     <ul class="sugestions" ng-show="sugestions" ng-cloak>
