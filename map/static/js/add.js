@@ -81,6 +81,14 @@ var add = (function(){
             }
         });
 
+        $scope.clean = function() {
+            setTimeout(function(){
+                $scope.place.url = $scope.place.url.replace(/^(https?:\/\/https?:\/\/)/, 'http://');
+                console.log($scope.place.url);
+                $scope.$apply();
+            }, 10);
+        };
+
         $scope.validAddress = function() {
             if ($scope.place.address) {
                 var address = $scope.place.address;

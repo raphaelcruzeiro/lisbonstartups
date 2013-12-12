@@ -80,7 +80,7 @@
                                     </ul>
                                 </div>
                                 <div class="elem-wrapper">
-                                    <span ng-class="{ok : !addForm.url.$error.required}"><input type="url" ng-model="place.url" name="url" placeholder="Website" required/></span>
+                                    <span ng-class="{ok : !addForm.url.$error.required}"><input type="url" ng-model="place.url" name="url" placeholder="Website" required ng-add-http ng-paste="clean()"/></span>
                                 </div>
                                 <label>
                                     What kind of place are you adding?

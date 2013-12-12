@@ -173,3 +173,36 @@ app.directive('ngShowModal', function($rootScope){
     return obj;
 });
 
+app.directive('ngAddHttp', function($rootScope){
+    var obj = {
+        compile: function(element, attrs) {
+            return function(scope, elem, attrs){
+                elem.focus(function(ev) {
+                    if (!elem.val()) {
+                        elem.val('http://');
+                    }
+                });
+            };
+        }
+    };
+    return obj;
+});
+
+app.directive('ngPaste', function(){
+    var obj = {
+        compile: function(element, attrs) {
+            return function(scope, elem, attrs){
+                elem.bind('paste', function() {
+                    var funcName = attrs.ngPaste.replace(/\(\)/, '');
+                    if(typeof(scope[funcName]) == 'function') {
+                        setTimeout(function(){
+                            scope.$apply(scope[funcName]);
+                        }, 10);
+                    }
+                });
+            };
+        }
+    };
+    return obj;
+});
+
