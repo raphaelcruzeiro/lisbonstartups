@@ -101,7 +101,7 @@ app.directive('ngMap', function(){
 app.directive('ngAddressAutocomplete', function($rootScope){
     var obj = {
         compile: function(element, attrs) {
-            var url = 'http://maps.googleapis.com/maps/api/geocode/json?address={address}&components=country:PT|administrative_area:Lisbon&sensor=false';
+            var url = 'http://maps.googleapis.com/maps/api/geocode/json?address={address}&components=country:PT&sensor=false';
             var prev = null;
             return function(scope, elem, attrs){
                 elem.keyup(function(ev) {

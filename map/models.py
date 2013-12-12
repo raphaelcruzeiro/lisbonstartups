@@ -80,7 +80,7 @@ class Place(models.Model):
         ('ic', 'Incubator'),
     )
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=600)
+    description = models.CharField(max_length=2000)
     type = models.CharField(max_length=2, choices=TYPES)
     date_added = models.DateTimeField(auto_now_add=True, editable=False)
     last_edit = models.DateTimeField(auto_now=True, editable=False)
