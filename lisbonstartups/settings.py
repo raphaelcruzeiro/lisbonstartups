@@ -109,3 +109,8 @@ TEMPLATE_DIRS = (
 AUTH_USER_MODEL = 'map.User'
 
 GRAPPELLI_ADMIN_TITLE = 'Lisbon Startups'
+
+try:
+    from local_settings import *
+except:
+    pass
