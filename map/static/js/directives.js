@@ -7,9 +7,9 @@ app.directive('ngMap', function(){
     var obj = {
         compile: function(element, attrs) {
             return function(scope, elem, attrs){
-                var latlng = new google.maps.LatLng(38.713811, -9.139386);
+                var latlng = new google.maps.LatLng(38.73717087503241, -9.209639143310595);
                 var opt = {
-                    zoom: 16,
+                    zoom: 13,
                     center: latlng,
                     disableDefaultUI: true
                 };
