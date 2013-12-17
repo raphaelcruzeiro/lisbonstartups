@@ -95,7 +95,7 @@ var add = (function(){
                 if (address.number && address.lat && address.lng) {
                     return true;
                 };
-            };
+            }
             return false;
         };
 
@@ -121,7 +121,7 @@ var add = (function(){
 
         $scope.add = function() {
             if(!addForm.$invalid) {
-                showLoader()
+                showLoader();
                 var place = angular.copy($scope.place);
                 place.type = place.type.value;
                 place.city = place.address.city;
@@ -145,7 +145,7 @@ var add = (function(){
         $(document).keyup(function(ev) {
             if (!$scope.sugestionBoxOpen) {
                 return
-            };
+            }
             if (ev.keyCode == 13) {
                 var currentElem = $('.modal').find('li.selected');
                 $scope.onSelection = currentElem.find('input[type="hidden"]').val();

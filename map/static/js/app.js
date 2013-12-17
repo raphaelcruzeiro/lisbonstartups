@@ -1,3 +1,4 @@
+
 angular.module('lisbonstartups', ['ngRoute', 'ngSanitize', 'ngAnimate']);
 
 var app = angular.module('lisbonstartups').config(function($httpProvider) {

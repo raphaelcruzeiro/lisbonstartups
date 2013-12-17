@@ -21,12 +21,9 @@ var map = (function(){
         $scope.eventCount = 0;
 
         var getPlaceById = function(id) {
-            for (var i = 0; i < $scope.places.length; i++) {
-                if ($scope.places[i].id == id) {
-                    return $scope.places[i];
-                }
-            }
-            return null;
+            return _.find($scope.places, function(place) {
+                return place.id == id;
+            });
         };
 
         var computeCount = function(place) {
@@ -121,29 +118,24 @@ var map = (function(){
 
         var clearMarkers = function() {
             onMap = [];
-            for (var i = 0; i < $scope.markers.length; i++) {
-                $scope.markers[i].setMap(null);
-            }
+            _.each($scope.markers, function(marker) {
+                marker.setMap(null);
+            });
         };
 
         $scope.filter = function() {
             setTimeout(function(){
                 clearMarkers();
-                for (var i = 0; i < $scope.places.length; i++) {
-                    if (isInFilter($scope.places[i])) {
-                        addPlaceToMap($scope.places[i]);
-                    }
-                }
+                _.each(_.filter($scope.places, isInFilter), addPlaceToMap);
             }, 200);
         };
 
         $scope.httpGet('/api/places/', null, function(response) {
             $scope.places = response;
-            for (var i = 0; i < response.length; i++) {
-                var current = response[i];
+            _.each(response, function(current) {
                 computeCount(current);
                 addPlaceToMap(current);
-            }
+            });
         });
 
     };
