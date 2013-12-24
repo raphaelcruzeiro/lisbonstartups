@@ -26,6 +26,16 @@ var map = (function(){
             });
         };
 
+        var shouldChangePos = function(latLng) {
+            for(var i = 0; i < $scope.markers.length; i++) {
+                var current = $scope.markers[i].getPosition();
+                if (current.lat() == latLng.lat() && current.lng() == latLng.lng()) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
         var computeCount = function(place) {
             if (place.type == 'st') {
                 $scope.startupCount++;
@@ -46,6 +56,22 @@ var map = (function(){
                 $scope.eventCount++;
             }
         };
+
+        registerOmsEvent('click', function(marker, event) {
+            var place = getPlaceById(marker.placeId);
+            var content = '<div class="infowindow-content">' +
+            '<h3>' + place.name + '</h3>' +
+            '<div class="description">' +
+            place.description +
+            '</div>' +
+            '<a href="' + place.url + '">' + place.url + '</a>' +
+            '</div>';
+            new google.maps.InfoWindow({
+                content: content,
+                width: 400,
+                height: 520
+            }).open(map, marker);
+        });
 
         var addPlaceToMap = function(place) {
             $scope.onMap.push(place);
@@ -75,23 +101,15 @@ var map = (function(){
                 icon: icon,
                 map: map
             });
+
+            while(shouldChangePos(marker.getPosition())) {
+                var pos = marker.getPosition();
+                marker.setPosition(new google.maps.LatLng(pos.lat() + 0.0000005, pos.lng() + 0.0000005));
+            }
+
             marker.placeId = place.id;
             $scope.markers.push(marker);
-            google.maps.event.addListener(marker, 'click', function() {
-                var place = getPlaceById(marker.placeId);
-                var content = '<div class="infowindow-content">' +
-                '<h3>' + place.name + '</h3>' +
-                '<div class="description">' +
-                place.description +
-                '</div>' +
-                '<a href="' + place.url + '">' + place.url + '</a>' +
-                '</div>';
-                new google.maps.InfoWindow({
-                    content: content,
-                    width: 400,
-                    height: 520
-                }).open(map, marker);
-            });
+            oms.addMarker(marker);
         };
 
         var isInFilter = function(place) {

@@ -6,7 +6,7 @@ var app = angular.module('lisbonstartups').config(function($httpProvider) {
     $httpProvider.defaults.headers.post['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
 });
 
-app.config(['$locationProvider', function($locationProvider){
+app.config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode(true);
 }]);
 
@@ -43,3 +43,4 @@ app.run(function($rootScope, $http){
             });
     };
 });
+

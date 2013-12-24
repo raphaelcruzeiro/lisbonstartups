@@ -41,7 +41,7 @@ var add = (function(){
         var reset = function() {
             $scope.addBox = true;
             $scope.sugestionBoxOpen = false;
-            $scope.place ={};
+            $scope.place = {};
             $scope.rawGeocodingData = [];
 
             $scope.types = [

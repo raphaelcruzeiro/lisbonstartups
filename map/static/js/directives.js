@@ -1,7 +1,12 @@
 
-console.log('Directives');
+var map = null, oms = null;
 
-var map = null;
+var omsEvents = [];
+
+function registerOmsEvent(eventType, callback) {
+    omsEvents.push([eventType, callback]);
+}
+
 
 app.directive('ngMap', function(){
     var obj = {
@@ -14,6 +19,12 @@ app.directive('ngMap', function(){
                     disableDefaultUI: true
                 };
                 map = new google.maps.Map(elem[0], opt);
+                oms = new OverlappingMarkerSpiderfier(map, {markersWontMove: true, markersWontHide: true});
+
+                _.each(omsEvents, function(eventTuple) {
+                    oms.addListener(eventTuple[0], eventTuple[1]);
+                });
+
                 map.set('styles', [
                     {
                         "featureType": "all",
