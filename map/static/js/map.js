@@ -27,13 +27,10 @@ var map = (function(){
         };
 
         var shouldChangePos = function(latLng) {
-            for(var i = 0; i < $scope.markers.length; i++) {
-                var current = $scope.markers[i].getPosition();
-                if (current.lat() == latLng.lat() && current.lng() == latLng.lng()) {
-                    return true;
-                }
-            }
-            return false;
+            return _.some($scope.markers, function(marker) {
+                var pos = marker.getPosition();
+                return pos.lat() == latLng.lat() && pos.lng() == latLng.lng();
+            });
         };
 
         var computeCount = function(place) {
