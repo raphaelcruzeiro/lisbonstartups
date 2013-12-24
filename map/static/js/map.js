@@ -102,6 +102,10 @@ var map = (function(){
                 map: map
             });
 
+            if (place.type == 'ac' || place.type == 'cw' || place.type == 'ic') {
+                marker.setZIndex(google.maps.Marker.MAX_ZINDEX + 1)
+            }
+
             while(shouldChangePos(marker.getPosition())) {
                 var pos = marker.getPosition();
                 marker.setPosition(new google.maps.LatLng(pos.lat() + 0.0000005, pos.lng() + 0.0000005));
