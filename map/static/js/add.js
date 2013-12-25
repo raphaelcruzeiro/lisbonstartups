@@ -23,20 +23,6 @@ var add = (function(){
         return null;
     };
 
-    var join = function(str1, str2) {
-        var result = '';
-        if (str1) {
-            result += str1;
-        }
-        if (str1 && str2) {
-            result += ', ';
-        }
-        if(str2) {
-            result += str2;
-        }
-        return result;
-    }
-
     var Controller = function($scope, $rootScope) {
         var reset = function() {
             $scope.addBox = true;
