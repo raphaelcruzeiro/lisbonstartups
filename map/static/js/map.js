@@ -36,6 +36,11 @@ var map = (function(){
             st: 0, ac: 0, cw: 0, iv: 0, ic: 0, ev: 0
         };
 
+        var infoWindow = new google.maps.InfoWindow({
+            width: 400,
+            height: 520
+        });
+
         var getPlaceById = function(id) {
             return _.find($scope.places, function(place) {
                 return place.id == id;
@@ -57,7 +62,13 @@ var map = (function(){
             });
         };
 
+        registerOmsEvent('spiderfy', function(markers) {
+            infoWindow.close();
+        });
+
+
         registerOmsEvent('click', function(marker, event) {
+            infoWindow.close();
             var place = getPlaceById(marker.placeId);
             var content = '<div class="infowindow-content">' +
             '<h3>' + place.name + '</h3>' +
@@ -66,11 +77,8 @@ var map = (function(){
             '</div>' +
             '<a href="' + place.url + '">' + place.url + '</a>' +
             '</div>';
-            new google.maps.InfoWindow({
-                content: content,
-                width: 400,
-                height: 520
-            }).open(map, marker);
+            infoWindow.setContent(content);
+            infoWindow.open(map, marker);
         });
 
         var addPlaceToMap = function(place) {
