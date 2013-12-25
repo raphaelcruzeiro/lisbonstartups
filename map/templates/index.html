@@ -36,11 +36,11 @@
                 <div class="show">
                     <h3>Show:</h3>
                     <ul class="filter">
-                        <li><label><img src="{{ STATIC_URL}}imgs/marker-startup.png">Startups (<span ng-bind="startupCount"></span>)</label><input type="checkbox" checked="checked" ng-model="startups" ng-click="filter()"><label><span></span></label></li>
-                        <li><label><img src="{{ STATIC_URL}}imgs/marker-accelerator.png">Accelerators (<span ng-bind="acceleratorCount"></span>)</label><input type="checkbox" checked="checked" ng-model="accelerators" ng-click="filter()"><label><span></span></label></li>
-                        <li><label><img src="{{ STATIC_URL}}imgs/marker-coworking.png">Coworking (<span ng-bind="coworkingCount"></span>)</label><input type="checkbox" checked="checked" ng-model="coworking" ng-click="filter()"><label><span></span></label></li>
-                        <li><label><img src="{{ STATIC_URL}}imgs/marker-investor.png">Investors (<span ng-bind="investorCount"></span>)</label><input type="checkbox" checked="checked" ng-model="investors" ng-click="filter()"><label><span></span></label></li>
-                        <li><label><img src="{{ STATIC_URL}}imgs/marker-incubator.png">Incubators (<span ng-bind="incubatorCount"></span>)</label><input type="checkbox" checked="checked" ng-model="incubators" ng-click="filter()"><label><span></span></label></li>
+                        <li><label><img src="{{ STATIC_URL}}imgs/marker-startup.png">Startups (<span ng-bind="counts.st"></span>)</label><input type="checkbox" checked="checked" ng-model="filters.st" ng-click="filter()"><label><span></span></label></li>
+                        <li><label><img src="{{ STATIC_URL}}imgs/marker-accelerator.png">Accelerators (<span ng-bind="counts.ac"></span>)</label><input type="checkbox" checked="checked" ng-model="filters.ac" ng-click="filter()"><label><span></span></label></li>
+                        <li><label><img src="{{ STATIC_URL}}imgs/marker-coworking.png">Coworking (<span ng-bind="counts.cw"></span>)</label><input type="checkbox" checked="checked" ng-model="filters.cw" ng-click="filter()"><label><span></span></label></li>
+                        <li><label><img src="{{ STATIC_URL}}imgs/marker-investor.png">Investors (<span ng-bind="counts.iv"></span>)</label><input type="checkbox" checked="checked" ng-model="filters.iv" ng-click="filter()"><label><span></span></label></li>
+                        <li><label><img src="{{ STATIC_URL}}imgs/marker-incubator.png">Incubators (<span ng-bind="counts.ic"></span>)</label><input type="checkbox" checked="checked" ng-model="filters.ic" ng-click="filter()"><label><span></span></label></li>
                     </ul>
                 </div>
                 <div class="fb-like" data-href="http://lisbonstartups.org" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
