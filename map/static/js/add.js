@@ -10,16 +10,9 @@ var addModule = (function() {
 
     var getComponent = function(name, data) {
         var components = data.address_components;
-        for (var i = 0; i < components.length; i++) {
-            var component = components[i];
-            for (var j = 0; j < component.types.length; j++) {
-                var type = component.types[j];
-                if (type == name) {
-                    return component.long_name;
-                }
-            }
-        }
-        return null;
+        return _.find(components, function(component) {
+            return _.contains(component.types, name);
+        }).long_name;
     };
 
     var Controller = function($scope, $rootScope) {
@@ -59,8 +52,7 @@ var addModule = (function() {
                 $scope.$apply();
                 return;
             };
-            for (var i = 0; i < response.results.length; i++) {
-                var result = response.results[i];
+            _.each(response.results, function(result, i) {
                 var address = result.formatted_address;
                 if ($scope.sugestions.indexOf(address) == -1) {
                     $scope.sugestions.push({
@@ -68,7 +60,7 @@ var addModule = (function() {
                         address: address
                     });
                 }
-            }
+            });
             if ($scope.sugestions.length > 0) {
                 $scope.onSelection = $scope.sugestions[0];
                 $scope.sugestionBoxOpen = true;

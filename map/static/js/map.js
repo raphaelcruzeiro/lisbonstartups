@@ -134,17 +134,15 @@ var mapModule = (function() {
         $scope.filter = function() {
             setTimeout(function() {
                 clearMarkers();
-                var active = _.map(
-                    _.filter(_.pairs($scope.filters), function(filter) {
+                var active = _.chain($scope.filters).pairs().filter(
+                    function(filter) {
                         return filter[1] == true;
-                    }),
-                    function(item) {
-                        return item[0];
-                    }
-                );
-                _.each(_.filter($scope.places, function(place) {
+                    }).map(function(item) {
+                    return item[0];
+                }).value();
+                _.chain($scope.places).filter(function(place) {
                     return _.contains(active, place.type);
-                }), addPlaceToMap);
+                }).each(addPlaceToMap);
             }, 200);
         };
 
