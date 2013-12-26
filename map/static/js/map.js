@@ -1,4 +1,4 @@
-var map = (function() {
+var mapModule = (function() {
     var iconPath = '/static/imgs/';
 
     var icons = [{

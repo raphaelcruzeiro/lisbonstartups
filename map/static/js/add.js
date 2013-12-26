@@ -1,4 +1,4 @@
-var add = (function() {
+var addModule = (function() {
 
     var showLoader = function() {
         $('.loader').show();

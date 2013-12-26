@@ -29,7 +29,7 @@
         {% csrf_token %}
         <div id="fb-root"></div>
         <a href="https://github.com/raphaelcruzeiro/lisbonstartups"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:4;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
-        <div class="main" ng-controller="map.Controller">
+        <div class="main" ng-controller="mapModule.Controller">
             <nav class="sidebar">
                 <h1>Lisbon Startups</h1>
                 <button class="add-something" ng-show-modal>Add something...</button>
@@ -52,7 +52,7 @@
         <div class="modal-blocker">
             <div class="table">
                 <div class="middle">
-                    <div class="modal" ng-controller="add.Controller">
+                    <div class="modal" ng-controller="addModule.Controller">
                         <div class="close-btn" ng-close-modal></div>
                         <div class="content" ng-show="addBox">
                             <div class="loader">
