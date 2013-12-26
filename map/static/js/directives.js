@@ -1,5 +1,5 @@
-
-var map = null, oms = null;
+var map = null,
+    oms = null;
 
 var omsEvents = [];
 
@@ -8,10 +8,10 @@ function registerOmsEvent(eventType, callback) {
 }
 
 
-app.directive('ngMap', function(){
+app.directive('ngMap', function() {
     var obj = {
         compile: function(element, attrs) {
-            return function(scope, elem, attrs){
+            return function(scope, elem, attrs) {
                 var latlng = new google.maps.LatLng(38.73717087503241, -9.209639143310595);
                 var opt = {
                     zoom: 13,
@@ -19,40 +19,36 @@ app.directive('ngMap', function(){
                     disableDefaultUI: true
                 };
                 map = new google.maps.Map(elem[0], opt);
-                oms = new OverlappingMarkerSpiderfier(map, {markersWontMove: true, markersWontHide: true});
+                oms = new OverlappingMarkerSpiderfier(map, {
+                    markersWontMove: true,
+                    markersWontHide: true
+                });
 
                 _.each(omsEvents, function(eventTuple) {
                     oms.addListener(eventTuple[0], eventTuple[1]);
                 });
 
-                map.set('styles', [
-                    {
+                map.set('styles', [{
                         "featureType": "all",
                         "elementType": "all",
-                        "stylers": [
-                            {
-                                "invert_lightness": false
-                            },
-                            {
-                                "saturation": 8
-                            },
-                            {
-                                "lightness": 50
-                            },
-                            {
-                                "gamma": 0.5
-                            },
-                            {
-                                "hue": "#ffff00"
-                            }
-                        ]
-                    },{
+                        "stylers": [{
+                            "invert_lightness": false
+                        }, {
+                            "saturation": 8
+                        }, {
+                            "lightness": 50
+                        }, {
+                            "gamma": 0.5
+                        }, {
+                            "hue": "#ffff00"
+                        }]
+                    }, {
                         "featureType": "transit.station",
                         "elementType": "labels.icon",
-                        "stylers": [
-                          { "hue": "#ff0000" }
-                        ]
-                      },
+                        "stylers": [{
+                            "hue": "#ff0000"
+                        }]
+                    },
 
                     // {
                     //     "featureType": "road.highway",
@@ -62,46 +58,45 @@ app.directive('ngMap', function(){
                     //   },
                     {
                         "featureType": "water",
-                        "stylers": [
-                            { "color": "#33aabb" }
-                        ]
-                    },
-                    {
+                        "stylers": [{
+                            "color": "#33aabb"
+                        }]
+                    }, {
                         "featureType": "poi.business",
-                        "stylers": [
-                          { "visibility": "off" }
-                        ]
-                      },{
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
+                    }, {
                         "featureType": "poi.government",
-                        "stylers": [
-                          { "visibility": "off" }
-                        ]
-                      },{
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
+                    }, {
                         "featureType": "poi.medical",
-                        "stylers": [
-                          { "visibility": "off" }
-                        ]
-                      },{
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
+                    }, {
                         "featureType": "poi.place_of_worship",
-                        "stylers": [
-                          { "visibility": "off" }
-                        ]
-                      },{
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
+                    }, {
                         "featureType": "poi.school",
-                        "stylers": [
-                          { "visibility": "off" }
-                        ]
-                      },{
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
+                    }, {
                         "featureType": "poi.sports_complex",
-                        "stylers": [
-                          { "visibility": "off" }
-                        ]
-                      },{
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
+                    }, {
                         "featureType": "transit.line",
-                        "stylers": [
-                          { "visibility": "off" }
-                        ]
-                      }
+                        "stylers": [{
+                            "visibility": "off"
+                        }]
+                    }
                 ]);
             };
         }
@@ -109,12 +104,12 @@ app.directive('ngMap', function(){
     return obj;
 });
 
-app.directive('ngAddressAutocomplete', function($rootScope){
+app.directive('ngAddressAutocomplete', function($rootScope) {
     var obj = {
         compile: function(element, attrs) {
             var url = 'http://maps.googleapis.com/maps/api/geocode/json?address={address}&components=country:PT&sensor=false';
             var prev = null;
-            return function(scope, elem, attrs){
+            return function(scope, elem, attrs) {
                 elem.keyup(function(ev) {
                     var str = $(this).val();
                     if (str.length < 4) {
@@ -132,7 +127,7 @@ app.directive('ngAddressAutocomplete', function($rootScope){
                     });
                 });
                 elem.blur(function() {
-                    setTimeout(function(){
+                    setTimeout(function() {
                         $rootScope.$broadcast('gotAddressSugestions', []);
                     }, 200);
                 });
@@ -142,10 +137,10 @@ app.directive('ngAddressAutocomplete', function($rootScope){
     return obj;
 });
 
-app.directive('ngSelect', function($rootScope){
+app.directive('ngSelect', function($rootScope) {
     var obj = {
         compile: function(element, attrs) {
-            return function(scope, elem, attrs){
+            return function(scope, elem, attrs) {
                 elem.click(function(ev) {
                     ev.preventDefault();
                     $rootScope.$broadcast('clickedSugestion', elem.find('input[type="hidden"]').val());
@@ -156,10 +151,10 @@ app.directive('ngSelect', function($rootScope){
     return obj;
 });
 
-app.directive('ngCloseModal', function($rootScope){
+app.directive('ngCloseModal', function($rootScope) {
     var obj = {
         compile: function(element, attrs) {
-            return function(scope, elem, attrs){
+            return function(scope, elem, attrs) {
                 elem.click(function(ev) {
                     ev.preventDefault();
                     $('.modal-blocker').fadeOut();
@@ -170,10 +165,10 @@ app.directive('ngCloseModal', function($rootScope){
     return obj;
 });
 
-app.directive('ngShowModal', function($rootScope){
+app.directive('ngShowModal', function($rootScope) {
     var obj = {
         compile: function(element, attrs) {
-            return function(scope, elem, attrs){
+            return function(scope, elem, attrs) {
                 elem.click(function(ev) {
                     ev.preventDefault();
                     $('.modal-blocker').fadeIn();
@@ -184,10 +179,10 @@ app.directive('ngShowModal', function($rootScope){
     return obj;
 });
 
-app.directive('ngAddHttp', function($rootScope){
+app.directive('ngAddHttp', function($rootScope) {
     var obj = {
         compile: function(element, attrs) {
-            return function(scope, elem, attrs){
+            return function(scope, elem, attrs) {
                 elem.focus(function(ev) {
                     if (!elem.val()) {
                         elem.val('http://');
@@ -199,14 +194,14 @@ app.directive('ngAddHttp', function($rootScope){
     return obj;
 });
 
-app.directive('ngPaste', function(){
+app.directive('ngPaste', function() {
     var obj = {
         compile: function(element, attrs) {
-            return function(scope, elem, attrs){
+            return function(scope, elem, attrs) {
                 elem.bind('paste', function() {
                     var funcName = attrs.ngPaste.replace(/\(\)/, '');
-                    if(typeof(scope[funcName]) == 'function') {
-                        setTimeout(function(){
+                    if (typeof(scope[funcName]) == 'function') {
+                        setTimeout(function() {
                             scope.$apply(scope[funcName]);
                         }, 10);
                     }
@@ -216,4 +211,3 @@ app.directive('ngPaste', function(){
     };
     return obj;
 });
-

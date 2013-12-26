@@ -1,5 +1,4 @@
-
-var add = (function(){
+var add = (function() {
 
     var showLoader = function() {
         $('.loader').show();
@@ -11,11 +10,11 @@ var add = (function(){
 
     var getComponent = function(name, data) {
         var components = data.address_components;
-        for(var i = 0; i < components.length; i++) {
+        for (var i = 0; i < components.length; i++) {
             var component = components[i];
-            for(var j = 0; j < component.types.length; j++) {
+            for (var j = 0; j < component.types.length; j++) {
                 var type = component.types[j];
-                if(type == name) {
+                if (type == name) {
                     return component.long_name;
                 }
             }
@@ -30,13 +29,22 @@ var add = (function(){
             $scope.place = {};
             $scope.rawGeocodingData = [];
 
-            $scope.types = [
-                { name: 'Startup', value: 'st' },
-                { name: 'Accelerator', value: 'ac' },
-                { name: 'Coworking', value: 'cw' },
-                { name: 'Investor', value: 'iv' },
-                { name: 'Incubator', value: 'ic' },
-            ];
+            $scope.types = [{
+                name: 'Startup',
+                value: 'st'
+            }, {
+                name: 'Accelerator',
+                value: 'ac'
+            }, {
+                name: 'Coworking',
+                value: 'cw'
+            }, {
+                name: 'Investor',
+                value: 'iv'
+            }, {
+                name: 'Incubator',
+                value: 'ic'
+            }, ];
 
             $scope.place.type = $scope.types[0];
         };
@@ -51,7 +59,7 @@ var add = (function(){
                 $scope.$apply();
                 return;
             };
-            for(var i = 0; i < response.results.length; i++) {
+            for (var i = 0; i < response.results.length; i++) {
                 var result = response.results[i];
                 var address = result.formatted_address;
                 if ($scope.sugestions.indexOf(address) == -1) {
@@ -61,14 +69,14 @@ var add = (function(){
                     });
                 }
             }
-            if($scope.sugestions.length > 0) {
+            if ($scope.sugestions.length > 0) {
                 $scope.onSelection = $scope.sugestions[0];
                 $scope.sugestionBoxOpen = true;
             }
         });
 
         $scope.clean = function() {
-            setTimeout(function(){
+            setTimeout(function() {
                 $scope.place.url = $scope.place.url.replace(/^(https?:\/\/https?:\/\/)/, 'http://');
                 console.log($scope.place.url);
                 $scope.$apply();
@@ -106,7 +114,7 @@ var add = (function(){
         });
 
         $scope.add = function() {
-            if(!addForm.$invalid) {
+            if (!addForm.$invalid) {
                 showLoader();
                 var place = angular.copy($scope.place);
                 place.type = place.type.value;
@@ -142,13 +150,13 @@ var add = (function(){
             if (ev.keyCode == 38 || ev.keyCode == 40) {
                 var currentElem = $('.modal').find('li.selected');
                 currentElem.removeClass('selected');
-                switch(ev.keyCode) {
+                switch (ev.keyCode) {
                     case 38:
-                    var selected = currentElem.prev();
-                    break;
+                        var selected = currentElem.prev();
+                        break;
                     case 40:
-                    var selected = currentElem.next();
-                    break;
+                        var selected = currentElem.next();
+                        break;
                 }
                 if (selected && selected.length > 0) {
                     currentElem = selected;

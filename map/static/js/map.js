@@ -1,15 +1,25 @@
-
-var map = (function(){
+var map = (function() {
     var iconPath = '/static/imgs/';
 
-    var icons = [
-        { type: 'st', path: [iconPath, 'marker-startup.png'].join('') },
-        { type: 'ac', path: [iconPath, 'marker-accelerator.png'].join('') },
-        { type: 'cw', path: [iconPath, 'marker-coworking.png'].join('') },
-        { type: 'iv', path: [iconPath, 'marker-investor.png'].join('') },
-        { type: 'ic', path: [iconPath, 'marker-incubator.png'].join('') },
-        { type: 'ev', path: [iconPath, 'marker-event.png'].join('') }
-    ];
+    var icons = [{
+        type: 'st',
+        path: [iconPath, 'marker-startup.png'].join('')
+    }, {
+        type: 'ac',
+        path: [iconPath, 'marker-accelerator.png'].join('')
+    }, {
+        type: 'cw',
+        path: [iconPath, 'marker-coworking.png'].join('')
+    }, {
+        type: 'iv',
+        path: [iconPath, 'marker-investor.png'].join('')
+    }, {
+        type: 'ic',
+        path: [iconPath, 'marker-incubator.png'].join('')
+    }, {
+        type: 'ev',
+        path: [iconPath, 'marker-event.png'].join('')
+    }];
 
     var Controller = function($scope, $rootScope, $location) {
         $scope.places = null;
@@ -33,7 +43,12 @@ var map = (function(){
         $scope.events = true;
 
         $scope.counts = {
-            st: 0, ac: 0, cw: 0, iv: 0, ic: 0, ev: 0
+            st: 0,
+            ac: 0,
+            cw: 0,
+            iv: 0,
+            ic: 0,
+            ev: 0
         };
 
         var infoWindow = new google.maps.InfoWindow({
@@ -56,7 +71,9 @@ var map = (function(){
 
         var computeCount = function() {
             var keys = ['st', 'cw', 'ac', 'iv', 'ic', 'ev'];
-            var counts = _.countBy($scope.places, function(place) { return place.type; });
+            var counts = _.countBy($scope.places, function(place) {
+                return place.type;
+            });
             _.each(_.keys(counts), function(key) {
                 $scope.counts[key] = counts[key];
             });
@@ -71,12 +88,12 @@ var map = (function(){
             infoWindow.close();
             var place = getPlaceById(marker.placeId);
             var content = '<div class="infowindow-content">' +
-            '<h3>' + place.name + '</h3>' +
-            '<div class="description">' +
-            place.description +
-            '</div>' +
-            '<a href="' + place.url + '">' + place.url + '</a>' +
-            '</div>';
+                '<h3>' + place.name + '</h3>' +
+                '<div class="description">' +
+                place.description +
+                '</div>' +
+                '<a href="' + place.url + '">' + place.url + '</a>' +
+                '</div>';
             infoWindow.setContent(content);
             infoWindow.open(map, marker);
         });
@@ -87,7 +104,9 @@ var map = (function(){
                 position: new google.maps.LatLng(place.address.lat, place.address.lng),
                 title: place.name,
                 animation: google.maps.Animation.DROP,
-                icon: _.findWhere(icons, { type: place.type }).path,
+                icon: _.findWhere(icons, {
+                    type: place.type
+                }).path,
                 map: map
             });
 
@@ -95,7 +114,7 @@ var map = (function(){
                 marker.setZIndex(google.maps.Marker.MAX_ZINDEX + 1)
             }
 
-            while(shouldChangePos(marker.getPosition())) {
+            while (shouldChangePos(marker.getPosition())) {
                 var pos = marker.getPosition();
                 marker.setPosition(new google.maps.LatLng(pos.lat() + 0.0000005, pos.lng() + 0.0000005));
             }
@@ -113,13 +132,19 @@ var map = (function(){
         };
 
         $scope.filter = function() {
-            setTimeout(function(){
+            setTimeout(function() {
                 clearMarkers();
                 var active = _.map(
-                    _.filter(_.pairs($scope.filters), function(filter) { return filter[1] == true; }),
-                    function (item) { return item[0]; }
+                    _.filter(_.pairs($scope.filters), function(filter) {
+                        return filter[1] == true;
+                    }),
+                    function(item) {
+                        return item[0];
+                    }
                 );
-                _.each(_.filter($scope.places, function(place) { return _.contains(active, place.type); }), addPlaceToMap);
+                _.each(_.filter($scope.places, function(place) {
+                    return _.contains(active, place.type);
+                }), addPlaceToMap);
             }, 200);
         };
 
