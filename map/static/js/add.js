@@ -93,7 +93,7 @@ var addModule = (function() {
                 lng: data.geometry.location.lng,
                 city: getComponent('administrative_area_level_1', data),
                 number: getComponent('street_number', data),
-                street: getComponent('route', data),
+                street: getComponent('route', data)
             };
             $scope.sugestions = null;
             $scope.sugestionBoxOpen = false;
